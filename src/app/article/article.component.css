@@ -1,4 +1,10 @@
-img{
-    width: 200px;
-    height: 250px;
+
+.modal-title{
+    text-align: center;
 }
+#containerDetail{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+

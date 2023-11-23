@@ -1,26 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
+import { DetailArticleService } from '../services/detail-article.service';
+import { FormsModule } from '@angular/forms'; 
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.css']
 })
-export class ArticleComponent {
+export class ArticleComponent implements OnInit {
+articleId: any;// Assurez-vous d'avoir quelque chose comme ceci dans votre composant
+ // Le type doit correspondre à la structure de vos articles
+  articles: any;
+  selectedArticle: any = { title: '', body: '' };
+  searchArticles: any;
 
-    /** declaration de la variable 'users' qui sera utilisée pour stocker les données des utilisateurs récupérées du service.  */
-posts: any;
-/** constructeur qui prend en paramètre un service UserService qui sera injecté automatiquement par Angular grâce à l'injection de dépendance.  */
-constructor(private articleService : ArticleService){}
-//userData est une  instance (objet) de la classe UserService
-ngOnInit(): void {
+getArticleDetails() {
+
+}
+
+// updateArticle(){}
+  posts: any;
+  details: any;
+  blog: any;
+  articleDetails: any;
+  searchTerm :string ='';
+  article: any[] = [];
+  // searchTerm: string = '';
+  // articles: any;
+  // articleId :number;
+  constructor(
+    private route: ActivatedRoute,
+    private articleService: ArticleService,
+    private detailArticleService: DetailArticleService
+  ) {}
+
+  ngOnInit(): void {
+        // Récupérer les articles
+        this.articleService.getPost().subscribe(posts => {
+          this.posts = posts;
+        });
+
+    /**deatils article */
+    const articleId = 5; // Remplacez par l'ID réel de l'article que vous souhaitez récupérer
+    this.detailArticleService.getArticleDetails(articleId).subscribe(details => {
+      this.articleDetails = details;
+       // mise à jour la variable selectedArticle 
+      this.selectedArticle = this.articles.find((article: { id: number; }) => article.id === articleId);
+    });
+
+
+    // Récupérez le terme de recherche depuis les paramètres de requête
+    // this.route.queryParams.subscribe(params => {
+    //   this.searchTerm = params['q'];
+    //   // Si le terme de recherche est défini, effectuez la recherche
+    //   if (this.searchTerm) {
+    //     this.searchArticles();
+    //   } else {
+    //     // Sinon, chargez tous les articles
+    //     this.loadArticles();
+    //   }
+    // });
+  }
+
+  // searchArticles(): void {
+  //   // Effectuez la recherche d'articles (implémentation de la fonction selon votre service)
+  //   this.articleService.searchArticles(this.searchTerm).subscribe(article => {
+  //     this.articles = article;
+  //   });
+  // }
+  // loadArticles() {
+  //   throw new Error('Method not implemented.');
+  // }
 
   
+
+
+     
+  }
   
-  /**getUsers du service UserService est appelé pour obtenir les utilisateurs.  */
-  /**La méthode subscribe est utilisée pour écouter les données retournées par le service. Une fois les données obtenues, elles sont assignées à la variable users du composant. */
-  this.articleService.getPosts().subscribe(posts =>{
-    this.posts = posts; 
-  })
-}
-}
+

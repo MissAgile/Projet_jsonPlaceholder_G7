@@ -1,21 +1,81 @@
-<div class="container"  >
 
 
- <div class="card mb-3" style="max-width: 540px;" *ngFor="let article of posts">
-    <div class="row g-0 d-flex justify-content-between">
-      <div class="col-md-5">
-        <img src="https://img.freepik.com/vecteurs-libre/fond-liste-controle-dessine-main_23-2148070732.jpg?size=626&ext=jpg" alt="">
+<div class="container" id="containerDetail">
+  
+  <div class="card col-" *ngFor="let articleDetails of posts">
+    <img id="carde" src="https://t4.ftcdn.net/jpg/06/33/00/21/240_F_633002151_BICYmU9tWjWrEfUhn9L5yf5VLxEoDU0V.jpg"
+      class="card-img-top w-100" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{articleDetails.title}}</h5>
+      <p class="card-text">{{articleDetails.body}}</p>
+      <div class="content-contentbtn d-flex">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" 
+          >
+          Détail
+        </button>
+        <button class="btn btn-danger" [routerLink]="['/modifier']"> Editer </button>
+
+        <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+          >
+          Modifier
+        </button> -->
+
+        <!-- button modal modifier -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Modidier </button>
       </div>
-      <div class="col-md-7">
-        <div class="card-body" >
-          <h5 class="card-title">{{article.title}}</h5>
-          <p class="card-text">{{article.body}}</p>
-          <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Details de l'article</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="articleDetails">
+            <h2>{{ articleDetails.title }}</h2>
+            <p>{{ articleDetails.body }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>
   </div>
 
-</div>
+  <!-- Modifier article -->
 
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content"  >
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" *ngIf="articleDetails">
+                <form>
+                  <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Titre</label>
+                    <!-- <input type="text" class="form-control" id="recipient-name"> -->
+                    <textarea class="form-control" id="message-text">{{articleDetails.title}}</textarea>
 
+                  </div>
+                  <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Description</label>
+                    <textarea class="form-control" id="message-text">{{articleDetails.body}}</textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
